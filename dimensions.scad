@@ -25,8 +25,8 @@ zsize = 6;                 // height of brass-standoffs
 
 xdelta = gap;
 ydelta = gap;
-xsize = x_pcb+2*xdelta;    // inner size
-ysize = y_pcb+2*ydelta;
+xsize = x_pcb+3*xdelta;    // inner size
+ysize = y_pcb+3*ydelta;
 
 d_screw  = 3.0 + gap;      // diameter screw
 d_head   = 4.8 + gap;      // diameter screw-head
