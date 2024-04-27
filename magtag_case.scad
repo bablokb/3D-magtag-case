@@ -16,27 +16,27 @@ x_off = x_pcb/2-r_pcb;
 y_off = y_pcb/2-r_pcb;
 
 st3_off = 18.5;
-st3_x   = 9.8;
+st3_x   = 10.8;
 st3_z   = 5.7;
-qt_off  = 36.8;
-qt_x    = 6.5;
-qt_z    = 3.1;
+qt_off  = 35.8;
+qt_x    = 7.5;
+qt_z    = 3.6;
 
 usbc_off = 8.4;
 usbc_y   = 9.2;
 usbc_z   = 3.5;
 
 reset_off = 22.3;
-reset_y   = 7.5;
-reset_z   = 3.6;
+reset_y   = 12.5;
+reset_z   = 3.6 + z_pcb + fuzz;
 
 boot_off  = 34.2;
 boot_y    = 7.5;
-boot_z    = 3.6;
+boot_z    = 3.6 + z_pcb + fuzz;
 
 on_off    = 9.5;
 on_x      = 7.2;
-on_z      = 2.3;
+on_z      = 2.3 + z_pcb + fuzz;
 
 // --- corpus   --------------------------------------------------------------
 
@@ -82,12 +82,12 @@ module case() {
     move([+x_pcb/2-st3_x/2-st3_off,-ysize/2,h_case-z_pcb]) cuboid([st3_x,2*w4+fuzz,st3_z],anchor=TOP+CENTER);
 
     // cutouts right (buttons, USB-C)
-    move([+x_pcb/2,-ysize/2+usbc_y/2+usbc_off,h_case-z_pcb]) cuboid([2*w4+fuzz,usbc_y,usbc_z],anchor=TOP+CENTER);
-    move([+x_pcb/2,-ysize/2+reset_y/2+reset_off,h_case-z_pcb]) cuboid([2*w4+fuzz,reset_y,usbc_z],anchor=TOP+CENTER);
-    move([+x_pcb/2,-ysize/2+boot_y/2+boot_off,h_case-z_pcb]) cuboid([2*w4+fuzz,boot_y,usbc_z],anchor=TOP+CENTER);
+    move([+xsize/2,-ysize/2+usbc_y/2+usbc_off,h_case-z_pcb]) cuboid([2*w4+fuzz,usbc_y,usbc_z],anchor=TOP+CENTER);
+    move([+xsize/2,-ysize/2+reset_y/2+reset_off,h_case+fuzz]) cuboid([2*w4+fuzz,reset_y,reset_z],anchor=TOP+CENTER);
+    move([+xsize/2,-ysize/2+boot_y/2+boot_off,h_case+fuzz]) cuboid([2*w4+fuzz,boot_y,boot_z],anchor=TOP+CENTER);
     
     // cutout top (on-slider)
-    move([-x_pcb/2+on_x/2+on_off,+ysize/2,h_case-z_pcb]) cuboid([on_x,2*w4+fuzz,on_z],anchor=TOP+CENTER);
+    move([-x_pcb/2+on_x/2+on_off,+ysize/2,h_case+fuzz]) cuboid([on_x,2*w4+fuzz,on_z],anchor=TOP+CENTER);
   }
 }
 
