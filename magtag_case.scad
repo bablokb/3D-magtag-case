@@ -10,6 +10,7 @@
 include <dimensions.scad>
 include <BOSL2/std.scad>
 
+layer = 0.2;
 h_sup = b;                            // height screw support
 h_case = b + h_sup + zsize + z_pcb;   // base-plate + screws + height of standoffs
 x_off = x_pcb/2-r_pcb;
@@ -65,16 +66,17 @@ module case() {
   difference() {
     corpus();
 
-    // cutout screw-holes
-    move([-x_off,+y_off,-fuzz]) cyl(h=b,d=d_head,anchor=BOTTOM+CENTER);
-    move([-x_off,-y_off,-fuzz]) cyl(h=b,d=d_head,anchor=BOTTOM+CENTER);
-    move([+x_off,+y_off,-fuzz]) cyl(h=b,d=d_head,anchor=BOTTOM+CENTER);
-    move([+x_off,-y_off,-fuzz]) cyl(h=b,d=d_head,anchor=BOTTOM+CENTER);
+    // cutout screw-holes: bottom hole for screw-heads leave a small layer
+    // for better printing. This layer has to be drilled after printing
+    move([-x_off,+y_off,-fuzz]) cyl(h=b-layer,d=d_head,anchor=BOTTOM+CENTER);
+    move([-x_off,-y_off,-fuzz]) cyl(h=b-layer,d=d_head,anchor=BOTTOM+CENTER);
+    move([+x_off,+y_off,-fuzz]) cyl(h=b-layer,d=d_head,anchor=BOTTOM+CENTER);
+    move([+x_off,-y_off,-fuzz]) cyl(h=b-layer,d=d_head,anchor=BOTTOM+CENTER);
 
-    move([-x_off,+y_off,-fuzz]) cyl(h=2*b+2*fuzz,d=d_screw,anchor=BOTTOM+CENTER);
-    move([-x_off,-y_off,-fuzz]) cyl(h=2*b+2*fuzz,d=d_screw,anchor=BOTTOM+CENTER);
-    move([+x_off,+y_off,-fuzz]) cyl(h=2*b+2*fuzz,d=d_screw,anchor=BOTTOM+CENTER);
-    move([+x_off,-y_off,-fuzz]) cyl(h=2*b+2*fuzz,d=d_screw,anchor=BOTTOM+CENTER);
+    move([-x_off,+y_off,b]) cyl(h=h_sup+fuzz,d=d_screw,anchor=BOTTOM+CENTER);
+    move([-x_off,-y_off,b]) cyl(h=h_sup+fuzz,d=d_screw,anchor=BOTTOM+CENTER);
+    move([+x_off,+y_off,b]) cyl(h=h_sup+fuzz,d=d_screw,anchor=BOTTOM+CENTER);
+    move([+x_off,-y_off,b]) cyl(h=h_sup+fuzz,d=d_screw,anchor=BOTTOM+CENTER);
 
     // cutouts bottom (Stemma)
     move([-x_pcb/2+st3_x/2+st3_off,-ysize/2,h_case-z_pcb]) cuboid([st3_x,2*w4+fuzz,st3_z],anchor=TOP+CENTER);
